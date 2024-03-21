@@ -18,6 +18,4 @@ clean:
 push:
 	git add .
 	git commit -a -m "Mommy Markus"
-	git pull
-	git rebase
 	git push
