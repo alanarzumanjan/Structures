@@ -17,5 +17,5 @@ clean:
 	
 push:
 	git add .
-	git commit -a -m "Mommy Markus"
+	git commit -a -m "mark"
 	git push
