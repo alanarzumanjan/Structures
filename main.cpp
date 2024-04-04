@@ -1,24 +1,27 @@
 #include <iostream>
-#include <string>
-#include <vector>
 using namespace std;
 
-class Node {
-public: 
+class Node
+{
+public:
     int data;
-    Node* next;
+    Node *next;
 
-    Node(int data) {
+    Node(int data)
+    {
         this->data = data;
         this->next = nullptr;
     }
 };
 
-class LinkedList {
+class LinkedList
+{
 public:
-    Node* head;
+    Node *head;
+    int len = 0;
 
-    LinkedList() {
+    LinkedList()
+    {
         this->head = nullptr;
     }
 
@@ -57,69 +60,84 @@ public:
         head = prev;
     }
 
-    void SortAddr() {
-        if (head == nullptr || head->next == nullptr)
-        return;
+    void sort()
+    {
+        Node *prev_node = nullptr;
+        Node *current_node = head;
+        Node *next_node = current_node->next;
+        Node *new_head = head;
+        Node *min_node = head;
+        Node *before_min = prev_node;
+        Node *after_min = next_node;
+        Node *unsorted_starts_here = head;
+        Node *sorted_ends_here = nullptr;
 
-        bool swapped;
-        Node* temp;
-
-        do {
-            swapped = false;
-            Node* current = head;
-            Node* prev = nullptr;
-
-            while (current->next != nullptr) {
-                if (current > current->next) { 
-                    if (prev != nullptr) {
-                        prev->next = current->next;
-                    } else {
-                        head = current->next;
-                    }
-                    
-                    temp = current->next->next;
-                    current->next->next = current;
-                    current->next = temp;
-
-                    swapped = true;
+        while (true)
+        {
+            current_node = unsorted_starts_here;
+            while (current_node != nullptr)
+            {
+                if (current_node->data <= min_node->data)
+                {
+                    before_min = prev_node;
+                    min_node = current_node;
+                    after_min = next_node;
                 }
 
-                prev = current;
-                current = current->next;
-            }
-        } while (swapped);
-    }
+                prev_node = current_node;
+                current_node = current_node->next;
 
+                if (current_node != nullptr)
+                    next_node = current_node->next;
+            }
+
+            if (min_node == unsorted_starts_here)
+            {
+                unsorted_starts_here = unsorted_starts_here->next;
+            }
+
+            min_node->next = new_head;
+            if (sorted_ends_here == nullptr)
+            {
+                sorted_ends_here = min_node;
+            }
+            new_head = min_node;
+            before_min->next = after_min;
+            min_node = unsorted_starts_here;
+
+            if (min_node == nullptr)
+            {
+                break;
+            }
+
+            next_node = unsorted_starts_here->next;
+            prev_node = sorted_ends_here;
+        }
+        head = new_head;
+    }
 };
 
-void PrintAddresses(const LinkedList& list) {
-    Node* current = list.head;
-    while (current != nullptr){
-        cout << current << " ";
-        current = current->next;
-    }
-    cout << endl;
-}
-
-int main() {
+int main()
+{
     LinkedList list;
+
     list.append(1);
+    list.append(4);
+    list.append(0);
+    list.append(-30);
     list.append(2);
-    list.append(3);
-    
+    list.append(14);
+    list.append(5);
+    list.append(-12);
+
     cout << "List: ";
     list.ListDisplay();
-    
-    cout << "Reverse List: ";
-    list.ReverseList();
-    list.ListDisplay();
 
-    cout << "Addr:" << endl;
-    PrintAddresses(list);
-    
-    cout << "Sorting addr:" << endl;
-    list.SortAddr();
-    PrintAddresses(list);
-    
+    cout << "Reverse List: ";
+    list.ReverseList(); list.ListDisplay();
+
+    cout << "Sorted List: ";
+    list.sort(); list.ListDisplay();
+
     return 0;
 }
