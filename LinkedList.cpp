@@ -115,12 +115,86 @@ public:
         }
         head = new_head;
     }
+
 };
 
-int main()
+class Stack: public LinkedList
 {
-    LinkedList list;
+    public:
 
+    void push(int data){
+        Node* newNode = new Node(data);
+        if(head == nullptr){
+            head = newNode;
+            len++;
+            return;
+        }
+        newNode->next = head;
+        head = newNode;
+        len++;
+    }
+
+    int pop(){
+        int ret_val = head->data;
+        
+        head = head->next;
+        len--;
+        return ret_val;
+    }
+
+    int peek(){
+        int ret_val = head->data;
+        return ret_val;
+    }
+
+    bool is_empty(){
+        return head == nullptr;
+    }
+
+    int size(){
+        int count = 0;
+        Node* current = head;
+        while (current != nullptr) {
+            count++;
+            current = current->next;
+        }
+        return count;
+    }
+
+    void isValidBrackets(string data){
+        Stack mama;
+        
+        string brackets;
+        if(data.is_empty()){
+            for(int i = 0; i < data.size(); i++){
+                brackets.push(data[i]);
+                data[i].pop();
+                
+            }
+        }
+        else{
+            cout << "Bracket is not empty" << endl;
+        }
+        
+    }
+};
+
+void deleteStack(Stack& stack) {
+    Node* current = stack.head;
+    while (current != nullptr) {
+        Node* temp = current;
+        current = current->next;
+        delete temp;
+    }
+    stack.head = nullptr;
+    stack.len = 0;
+}
+
+
+
+int main(){
+    
+    LinkedList list;
     list.append(1);
     list.append(4);
     list.append(0);
@@ -139,5 +213,50 @@ int main()
     cout << "Sorted List: ";
     list.sort(); list.ListDisplay();
 
+    Stack stack;
+    cout << "Not push - Size: " << stack.size() << endl;
+    stack.push(1);
+    stack.push(4);
+    stack.push(0);
+    stack.push(-30);
+    stack.push(2);
+    stack.push(14);
+    stack.push(5);
+    stack.push(-12);
+
+    cout << "Push - Size: " << stack.size() << endl;
+    
+    printf("top: %d\n", stack.peek());
+    printf("pop: %d\n", stack.pop());
+    printf("pop: %d\n", stack.pop());
+
+    printf("top: %d\n", stack.peek());
+    printf("top: %d\n", stack.peek());
+    printf("top: %d\n", stack.peek());
+    printf("top: %d\n", stack.peek());
+
+    printf("pop: %d\n", stack.pop());
+    printf("pop: %d\n", stack.pop());
+    printf("pop: %d\n", stack.pop());
+    
+    if (stack.is_empty()) {
+        cout << "Stack is empty" << endl;
+    } else {
+        cout << "Stack is not empty" << endl;
+    }
+
+    cout << "Before all - Size: " << stack.size() << endl;
+
+    deleteStack(stack);
+
+    if (stack.is_empty()) {
+        cout << "Stack is empty" << endl;
+    } else {
+        cout << "Stack is not empty" << endl;
+    }
+
+    cout << "After deletion - Size: " << stack.size() << endl;
+
+    stack.isValidBrackets("[{]}");
     return 0;
 }
