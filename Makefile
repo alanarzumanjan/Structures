@@ -1,4 +1,4 @@
-TARGET = main
+TARGET = LinkedList
 SRC_FILE = $(TARGET).cpp
 
 CC = g++
