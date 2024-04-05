@@ -25,33 +25,40 @@ public:
         this->head = nullptr;
     }
 
-    void append(int data) {
-        Node* newNode = new Node(data);
-        if (head == nullptr) {
+    void append(int data)
+    {
+        Node *newNode = new Node(data);
+        if (head == nullptr)
+        {
             head = newNode;
             return;
         }
-        Node* current = head;
-        while (current->next != nullptr) {
+        Node *current = head;
+        while (current->next != nullptr)
+        {
             current = current->next;
         }
         current->next = newNode;
     }
 
-    void ListDisplay() {
-        Node* current = head;
-        while (current != nullptr) {
+    void ListDisplay()
+    {
+        Node *current = head;
+        while (current != nullptr)
+        {
             cout << current->data << " ";
             current = current->next;
         }
         cout << endl;
     }
-    
-    void ReverseList() {
-        Node* prev = nullptr;
-        Node* current = head;
-        Node* next = nullptr;
-        while (current != nullptr) {
+
+    void ReverseList()
+    {
+        Node *prev = nullptr;
+        Node *current = head;
+        Node *next = nullptr;
+        while (current != nullptr)
+        {
             next = current->next;
             current->next = prev;
             prev = current;
@@ -115,16 +122,16 @@ public:
         }
         head = new_head;
     }
-
 };
 
-class Stack: public LinkedList
+class Stack : public LinkedList
 {
-    public:
-
-    void push(int data){
-        Node* newNode = new Node(data);
-        if(head == nullptr){
+public:
+    void push(int data)
+    {
+        Node *newNode = new Node(data);
+        if (head == nullptr)
+        {
             head = newNode;
             len++;
             return;
@@ -134,55 +141,78 @@ class Stack: public LinkedList
         len++;
     }
 
-    int pop(){
+    int pop()
+    {
         int ret_val = head->data;
-        
+
         head = head->next;
         len--;
         return ret_val;
     }
 
-    int peek(){
+    int peek()
+    {
         int ret_val = head->data;
         return ret_val;
     }
 
-    bool is_empty(){
+    bool is_empty()
+    {
         return head == nullptr;
     }
 
-    int size(){
+    int size()
+    {
         int count = 0;
-        Node* current = head;
-        while (current != nullptr) {
+        Node *current = head;
+        while (current != nullptr)
+        {
             count++;
             current = current->next;
         }
         return count;
     }
 
-    void isValidBrackets(string data){
+    bool isValidBrackets(const string &data)
+    {
         Stack mama;
-        
-        string brackets;
-        if(data.is_empty()){
-            for(int i = 0; i < data.size(); i++){
-                brackets.push(data[i]);
-                data[i].pop();
-                
+
+        for (char bracket : data)
+        {
+            if (bracket == '(' || bracket == '[' || bracket == '{')
+            {
+                mama.push(bracket);
+            }
+            else if (bracket == ')' || bracket == ']' || bracket == '}')
+            {
+                if (mama.is_empty())
+                {
+                    return false;
+                }
+                char top = mama.peek();
+                if ((bracket == ')' && top == '(') ||
+                    (bracket == ']' && top == '[') ||
+                    (bracket == '}' && top == '{'))
+                {
+                    mama.pop();
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
-        else{
-            cout << "Bracket is not empty" << endl;
-        }
-        
+
+        return mama.is_empty();
     }
 };
 
-void deleteStack(Stack& stack) {
-    Node* current = stack.head;
-    while (current != nullptr) {
-        Node* temp = current;
+void deleteStack(Stack &stack)
+{
+    Node *current = stack.head;
+    while (current != nullptr)
+    {
+        Node *temp = current;
         current = current->next;
         delete temp;
     }
@@ -190,10 +220,9 @@ void deleteStack(Stack& stack) {
     stack.len = 0;
 }
 
+int main()
+{
 
-
-int main(){
-    
     LinkedList list;
     list.append(1);
     list.append(4);
@@ -208,10 +237,12 @@ int main(){
     list.ListDisplay();
 
     cout << "Reverse List: ";
-    list.ReverseList(); list.ListDisplay();
+    list.ReverseList();
+    list.ListDisplay();
 
     cout << "Sorted List: ";
-    list.sort(); list.ListDisplay();
+    list.sort();
+    list.ListDisplay();
 
     Stack stack;
     cout << "Not push - Size: " << stack.size() << endl;
@@ -225,7 +256,7 @@ int main(){
     stack.push(-12);
 
     cout << "Push - Size: " << stack.size() << endl;
-    
+
     printf("top: %d\n", stack.peek());
     printf("pop: %d\n", stack.pop());
     printf("pop: %d\n", stack.pop());
@@ -238,10 +269,13 @@ int main(){
     printf("pop: %d\n", stack.pop());
     printf("pop: %d\n", stack.pop());
     printf("pop: %d\n", stack.pop());
-    
-    if (stack.is_empty()) {
+
+    if (stack.is_empty())
+    {
         cout << "Stack is empty" << endl;
-    } else {
+    }
+    else
+    {
         cout << "Stack is not empty" << endl;
     }
 
@@ -249,14 +283,25 @@ int main(){
 
     deleteStack(stack);
 
-    if (stack.is_empty()) {
+    cout << "After deletion - Size: " << stack.size() << endl;
+    if (stack.is_empty())
+    {
         cout << "Stack is empty" << endl;
-    } else {
+    }
+    else
+    {
         cout << "Stack is not empty" << endl;
     }
-
-    cout << "After deletion - Size: " << stack.size() << endl;
-
-    stack.isValidBrackets("[{]}");
+    string mark;
+    cout << "Enter Brackets: ";
+    cin >> mark;
+    if (stack.isValidBrackets(mark))
+    {
+        printf("Valid Brackets\n");
+    }
+    else
+    {
+        cout << "Not Valid Brackets!\n";
+    }
     return 0;
 }
