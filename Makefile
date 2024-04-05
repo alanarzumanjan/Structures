@@ -1,4 +1,4 @@
-TARGET = LinkedList
+TARGET = Enqueue
 SRC_FILE = $(TARGET).cpp
 
 CC = g++
