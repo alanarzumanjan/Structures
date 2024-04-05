@@ -173,7 +173,7 @@ public:
         return count;
     }
 
-    bool Valid(const string &data)
+    bool Valid( string data)
     {
         Stack mama;
 
