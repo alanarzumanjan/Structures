@@ -173,7 +173,7 @@ public:
         return count;
     }
 
-    bool isValidBrackets(const string &data)
+    bool Valid(const string &data)
     {
         Stack mama;
 
@@ -295,7 +295,7 @@ int main()
     string mark;
     cout << "Enter Brackets: ";
     cin >> mark;
-    if (stack.isValidBrackets(mark))
+    if (stack.Valid(mark))
     {
         printf("Valid Brackets\n");
     }
