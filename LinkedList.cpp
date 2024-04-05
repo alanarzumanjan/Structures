@@ -173,28 +173,28 @@ public:
         return count;
     }
 
-    bool Valid( string data)
+    bool Valid(string data)
     {
-        Stack mama;
+        Stack your_mama;
 
         for (char bracket : data)
         {
             if (bracket == '(' || bracket == '[' || bracket == '{')
             {
-                mama.push(bracket);
+                your_mama.push(bracket);
             }
             else if (bracket == ')' || bracket == ']' || bracket == '}')
             {
-                if (mama.is_empty())
+                if (your_mama.is_empty())
                 {
                     return false;
                 }
-                char top = mama.peek();
+                char top = your_mama.peek();
                 if ((bracket == ')' && top == '(') ||
                     (bracket == ']' && top == '[') ||
                     (bracket == '}' && top == '{'))
                 {
-                    mama.pop();
+                    your_mama.pop();
                 }
                 else
                 {
@@ -203,7 +203,7 @@ public:
             }
         }
 
-        return mama.is_empty();
+        return your_mama.is_empty();
     }
 };
 
