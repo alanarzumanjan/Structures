@@ -206,7 +206,7 @@ public:
         return your_mama.is_empty();
     }
 };
-
+ 
 void deleteStack(Stack &stack)
 {
     Node *current = stack.head;
