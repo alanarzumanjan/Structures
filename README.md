@@ -18,7 +18,7 @@
 - Самая большая очередь в метрах
 <br>
 
-### **Useful commands:**
+### **Useful terminal commands:**
 - make
 - make clean
 - make push
